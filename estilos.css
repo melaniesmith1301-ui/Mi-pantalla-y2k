@@ -1,0 +1,240 @@
+@font-face {
+  font-family: "MiletraY2K";
+  src: url("MiletraY2K.ttf") format("truetype");
+  font-display: swap;
+}
+
+body {
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+  background-attachment: fixed;
+  color: white;
+  text-align: center;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.widget {
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  width: 160px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.caja-rosa {
+  background: rgba(255, 20, 147, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  transition: transform 0.2s;
+}
+
+.contenedor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding: 10px;
+  width: 350px;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+h2 {
+  font-family: "MiletraY2K", cursive;
+  font-size: 40px;
+  margin-top: 2.5px;
+  margin-bottom: 2.5px;
+}
+
+p {
+  font-family: "MiletraY2K", cursive;
+  font-size: 20px;
+  margin-top: 2.5px;
+  margin-bottom: 2.5px;
+}
+
+.foto-widget, .gif-widget {
+  height: 110px;
+  width: 85%;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* --- DOCK --- */
+.dock {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 30px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 30px;
+  padding: 10px 30px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 25px rgba(255, 105, 180, 0.6);
+  z-index: 9999;
+}
+
+/* --- LANA CON GIRO --- */
+.contenedor-lana {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  height: 75vh;
+  width: 350px;
+  z-index: 1;
+  perspective: 1000px; /* Esto hace que el giro se vea 3D */
+}
+
+.Lana {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: bottom right;
+  filter: drop-shadow(0px 0px 20px rgba(255, 255, 255, 0.8));
+  opacity: 0;
+  transform: rotateY(90deg); /* Empieza de costado, como dada vuelta */
+  backface-visibility: visible;
+}
+
+.foto-1 {
+  opacity: 1;
+  transform: rotateY(0deg);
+  z-index: 3;
+}
+/* --- ANIMACIÓN HOVER LANA CON VUELTA --- */
+.contenedor-lana:hover .foto-1 { animation: vueltaLana1 4s infinite; }
+.contenedor-lana:hover .foto-2 { animation: vueltaLana2 4s infinite; }
+.contenedor-lana:hover .foto-3 { animation: vueltaLana3 4s infinite; }
+
+@keyframes vueltaLana1 {
+  0% { opacity: 1; transform: rotateY(0deg); z-index: 3; }
+  20% { opacity: 1; transform: rotateY(90deg); z-index: 3; }
+  25%, 100% { opacity: 0; transform: rotateY(90deg); z-index: 1; }
+}
+
+@keyframes vueltaLana2 {
+  0%, 25% { opacity: 0; transform: rotateY(-90deg); z-index: 1; }
+  30% { opacity: 1; transform: rotateY(0deg); z-index: 3; }
+  45% { opacity: 1; transform: rotateY(0deg); z-index: 3; }
+  50% { opacity: 1; transform: rotateY(90deg); z-index: 3; }
+  51%, 100% { opacity: 0; transform: rotateY(90deg); z-index: 1; }
+}
+
+@keyframes vueltaLana3 {
+  0%, 50% { opacity: 0; transform: rotateY(-90deg); z-index: 1; }
+  55% { opacity: 1; transform: rotateY(0deg); z-index: 3; }
+  95% { opacity: 1; transform: rotateY(0deg); z-index: 3; } /* Acá se queda quieta un montón */
+  100% { opacity: 1; transform: rotateY(90deg); z-index: 3; }
+}
+.icono {
+  font-size: 35px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  display: inline-block;
+}
+.icono:hover { transform: scale(1.3) translateY(-14px); }
+
+.widget:hover, .caja-rosa:hover {
+  transform: scale(1.05);
+}
+
+.widget p { margin: 5px 0 0 0; }
+
+.reproductor {
+  width: 90%;
+  height: 30px;
+  margin-top: 10px;
+  border-radius: 15px;
+}
+
+.widget-afirmacion {
+  width: 350px;
+  margin-left: 50px;
+  margin-top: 15px;
+}
+/* --- RESPONSIVE CELULAR --- */
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .contenedor {
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0;
+  }
+
+  .widget {
+    width: auto; /* que no sea fijo de 160px */
+    padding: 12px;
+  }
+
+  .widget-afirmacion {
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  h2 { font-size: 28px; }
+  p { font-size: 16px; }
+
+  .foto-widget, .gif-widget {
+    height: 90px;
+  }
+
+  /* Lana más chiquita y atrás, para que no tape todo */
+  .contenedor-lana {
+    width: 220px;
+    height: 45vh;
+    opacity: 0.9;
+  }
+
+  /* Dock más compacto */
+  .dock {
+    gap: 18px;
+    padding: 8px 18px;
+    bottom: 12px;
+    width: max-content;
+    max-width: calc(100% - 30px);
+  }
+
+  .icono { font-size: 28px; }
+  .icono:hover { transform: scale(1.2) translateY(-8px); }
+
+  /* Que el hover no haga zoom gigante en celu */
+  .widget:hover, .caja-rosa:hover {
+    transform: scale(1.03);
+  }
+}
+/* --- PANTALLAS MUY CHIQUITAS --- */
+@media (max-width: 380px) {
+  .contenedor {
+    grid-template-columns: 1fr; /* 1 columna para que no se aplaste */
+  }
+
+  .contenedor-lana {
+    width: 180px;
+    height: 38vh;
+  }
+
+  .dock { gap: 14px; }
+  .icono { font-size: 24px; }
+}

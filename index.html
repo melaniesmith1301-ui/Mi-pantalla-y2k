@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mi pantalla Y2K</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="contenedor">
+<div class="widget">
+<h2 id="reloj">9:38 AM</h2>
+<p id="saludo">Cargando saludo...</p>
+</div>
+<div class="widget caja-rosa">
+<img src="britney.png" alt="Britney" class="foto-widget">
+<audio controls class="reproductor">
+<source src="break the ice.mp3" type="audio/mpeg">
+</audio>
+<p>Britney Spears - Break the Ice</p>
+</div>
+<div class="widget">
+  <h2 id="clima-temp">--°C</h2>
+  <p id="clima-texto">Cargando clima...</p>
+</div>
+<div class="widget caja-rosa">
+<video src="heart.webm" class="gif-widget" autoplay loop muted playsinline> </video>
+</div>
+</div>
+<div class="widget widget-afirmacion">
+  <p id="afirmacion">Cargando frase...</p>
+</div>
+<!-- 1. CAJA DE LANA -->
+<div class="contenedor-lana">
+    <img src="lana.png" alt="Lana 1" class="Lana foto-1">
+    <img src="lana2.png" alt="Lana 2" class="Lana foto-2">
+    <img src="lana3.png" alt="Lana 3" class="Lana foto-3">
+</div> <!-- ¡ESTE ES EL CIERRE DE LANA! -->
+
+<!-- 2. CAJA DEL DOCK (Afuera de Lana) -->
+<div class="dock">
+    <div class="icono">📁</div>
+    <div class="icono">🎵</div>
+    <div class="icono">📸</div>
+    <div class="icono">🌐</div>
+    <div class="icono">⚙️</div>
+</div>
+
+<!-- 3. SCRIPT (El reloj y las frases) -->
+<script>
+   // ... tu código de script va acá abajo ...
+function actualizarReloj() {
+let ahora = new Date();
+let horas = ahora.getHours()
+let minutos = ahora.getMinutes();
+if (horas < 10) {  horas = "0" + horas; }
+if (minutos < 10) { minutos = "0" + minutos; }
+let cajaReloj = document.getElementById("reloj");
+if (cajaReloj) {
+cajaReloj.innerHTML = horas + ":" + minutos;
+}
+}
+setInterval(actualizarReloj, 1000);
+actualizarReloj();
+// --- SALUDO DINÁMICO ---
+function actualizarSaludo() {
+    let hora = new Date().getHours();
+    let mensaje = "Buenas noches 🌙";
+    if (hora >= 6 && hora < 12) {
+        mensaje = "Buenos días ☀️";
+    } else if (hora >= 12 && hora < 20) {
+        mensaje = "Buenas tardes 🌸";
+    } 
+    document.getElementById("saludo").innerHTML = mensaje;
+}
+actualizarSaludo(); // Se ejecuta al cargar la página
+// --- FRASES ALEATORIAS (Afirmaciones) ---
+// Podés agregar todas las que quieras a esta lista
+const listaFrases = [
+    "Soy hermosa y radiante ✨",
+    "El dinero fluye hacia mí fácilmente 💸",
+    "Merezco todo lo bueno 🎀",
+    "Mi autoestima está por las nubes 💅",
+    "Atraigo abundancia y amor a mi vida 💖",
+    "Soy capaz de lograr todo lo que me propongo 🚀"
+];
+function mostrarFraseAleatoria() {
+    // Elige un número al azar entre 0 y la cantidad de frases que haya
+    let indice = Math.floor(Math.random() * listaFrases.length);
+    document.getElementById("afirmacion").innerHTML = listaFrases[indice];
+}
+mostrarFraseAleatoria(); // Cambia la frase cada vez que recargás la página
+// --- CLIMA REAL CON OPEN-METEO (GRATIS) ---
+async function actualizarClima() {
+  try {
+    // Buenos Aires: latitud -34.6, longitud -58.38
+    const respuesta = await fetch("https://api.open-meteo.com/v1/forecast?latitude=-34.6&longitude=-58.38&current=temperature_2m,weather_code&timezone=America%2FArgentina%2FBuenos_Aires");
+    const datos = await respuesta.json();
+    
+    const temp = Math.round(datos.current.temperature_2m);
+    const codigo = datos.current.weather_code;
+
+    // Traducimos el código a emoji + texto
+    let texto = "Buenos Aires ";
+    if (codigo === 0) texto += "☀️ Despejado";
+    else if (codigo <= 3) texto += "⛅ Nublado";
+    else if (codigo <= 48) texto += "🌫️ Niebla";
+    else if (codigo <= 67) texto += "🌧️ Lluvia";
+    else if (codigo <= 77) texto += "❄️ Nieve";
+    else texto += "⛈️ Tormenta";
+
+    document.getElementById("clima-temp").innerHTML = temp + "°C";
+    document.getElementById("clima-texto").innerHTML = texto;
+
+  } catch (error) {
+    document.getElementById("clima-texto").innerHTML = "No se pudo cargar el clima";
+  }
+}
+
+actualizarClima();
+// Que se actualice solo cada 30 minutos
+setInterval(actualizarClima, 30 * 60 * 1000);
+</script>
+</body>
+</html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi pantalla Y2K</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
